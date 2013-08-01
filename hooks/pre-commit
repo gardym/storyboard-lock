@@ -1,0 +1,19 @@
+#!/bin/sh
+ENDPOINT="http://yourendpoint.whatever.com.net/"
+
+if git status | grep storyboard;
+then
+  STATUS="$(curl -s -o /dev/null -w "%{http_code}" $ENDPOINT)"
+
+  if [ $STATUS = "200" ];
+  then
+    exit 0
+  else
+    LOCKER="$(curl -s $ENDPOINT)"
+    echo "\033[0;31mStop: Don't commit that!\033[0m"
+    echo "The storyboard is currently locked by: $LOCKER"
+    exit 1
+  fi
+else
+  exit 0
+fi
