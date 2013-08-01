@@ -31,3 +31,6 @@ exports.unlock = function(req, res) {
   res.send(200);
 };
 
+exports.keepalive = function(req, res) {
+  res.send(200);
+};
